@@ -11,45 +11,21 @@ function handleRequest(event) {
     clearFacts()
     num = number_input.value;
     if (!num) num = 0;
-    urls = [`${BASE}${num}`, `${BASE}${num}`, `${BASE}${num}`, `${BASE}${num}`]
-    requests = urls.map(url => fetchFact(url))
-    Promise.all(requests)
+    Promise.all([
+        axios.get(`${BASE}${num}`),
+        axios.get(`${BASE}${num}`),
+        axios.get(`${BASE}${num}`),
+        axios.get(`${BASE}${num}`)
+    ])
         .then(response => addToPage(response))
         .then(clearInput)
         .catch(error => {
-            console.error(error);
-            alert('something went wrong :(')
+            alert(`${error.message}> Try again later...`)
         });
-}
-// This function sends the http request to the numbers API
-function fetchFact(url) {
-    return new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.onload = function () {
-            if (xhr.readyState !== 4) return;
-            if (xhr.status >= 200 && xhr.status < 300) {
-                resolve({
-                    data: xhr.response,
-                    status: xhr.status,
-                    request: xhr
-                });
-            } else {
-                reject({
-                    message: `Request failed.  Returned status of ${xhr.status}`,
-                    status: xhr.status,
-                    request: xhr
-                });
-            }
-        };
-        xhr.onerror = function handleError() {
-            reject("NETWORK ERROR!")
-        }
-        xhr.open('GET', `${url}`);
-        xhr.send();
-    });
 }
 
 function addToPage(response) {
+    // this function takes the array of responses and updates the page
     response.forEach(res => {
         const li = document.createElement("li");
         li.textContent = res.data;
