@@ -1,6 +1,6 @@
 // const baseURL = 'https://deckofcardsapi.com/api/deck';
-const cardPile = document.querySelector('#card-pile');
-const cardBTN = document.getElementById('card-button')
+const cardPile = document.querySelector('#card-pile'); // this is the display area to append the next card
+const cardBTN = document.getElementById('card-button') // this button requset next card from deck
 cardBTN.addEventListener('click', requestCard);
 
 class Deck {

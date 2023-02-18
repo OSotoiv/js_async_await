@@ -1,8 +1,9 @@
-const number_form = document.querySelector('#number_form');
-const number_input = document.querySelector('#number_input');
-const response_list = document.getElementById("response_list");
 const BASE = 'http://numbersapi.com/'
-
+// area on the page to post the response from API
+const response_list = document.getElementById("response_list");
+// selecting form and adding event listener
+const number_input = document.querySelector('#number_input');
+const number_form = document.querySelector('#number_form');
 number_form.addEventListener('submit', handleRequest);
 
 // This function gets the number from the users input and builds the url from the input.
@@ -11,6 +12,8 @@ function handleRequest(event) {
     clearFacts()
     num = number_input.value;
     if (!num) num = 0;
+
+
     Promise.all([
         axios.get(`${BASE}${num}`),
         axios.get(`${BASE}${num}`),
